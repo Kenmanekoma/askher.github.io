@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate</title>
+    <style>
+        html, body {
+            overflow: hidden; /* Disables scrolling */
+            height: 100%; /* Ensures it covers the full viewport */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #FD1853;
+            font-size: 6vw; /* Responsive font size */
+            margin: 20px 0;
+        }
+        p {
+            font-size: 4vw; /* Responsive font size */
+            color: #333;
+            margin: 10px 0;
+        }
+        .content-img {
+            width: 80%; /* Relative size for responsiveness */
+            max-width: 200px; /* Limit the maximum size */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #FD1853;
+            color: white;
+            padding: 12px 40px; /* Adjust padding for smaller screens */
+            font-size: 4vw; /* Responsive font size */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: white;
+            color: #FD1853;
+            border: 2px solid #FD1853;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            transform: rotate(-45deg);
+            animation: floatUp 2s linear infinite; /* Faster animation */
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.7) rotate(-45deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+        /* Responsive Styles for Small Screens */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 8vw; /* Larger font size for smaller screens */
+            }
+            .btn {
+                font-size: 5vw; /* Adjust button size */
+                padding: 10px 30px; /* Smaller padding */
+            }
+        }
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .content-img {
+                width: 90%; /* Use more width for smaller screens */
+            }
+            .btn {
+                font-size: 5vw;
+                padding: 8px 25px;
+            }
+        }
+        .slider {
+            zoom:1.5;display: flex;
+            position: relative;
+            width: 200px
+        }
+
+        .slider input {
+            flex: 1;
+            accent-color: white;
+            cursor: pointer
+        }
+
+        .slider .container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1
+        }
+
+        .slider .heart {
+            font-size: 25px;
+            position: absolute;
+            animation-fill-mode: forwards;
+            translate: -20px -10px
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #4158d0;
+            background-image: linear-gradient(43deg,#4158d0,#c850c0 46%,#ffcc70);
+            outline: none;
+            opacity: .7;
+            -webkit-transition: .2s;
+            transition: opacity .2s
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #4c00ff;
+            background-image: linear-gradient(160deg,#4900f5,#80d0c7);
+            cursor: pointer
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #0093e9;
+            background-image: linear-gradient(160deg,#0093e9,#80d0c7);
+            cursor: pointer
+        }
+
+    
+    </style>
+</head>
+<body>
+    
+    
+            <h1>Rate how exited are you</h1>
+            <img src="https://media1.tenor.com/m/X52rk1vf28QAAAAd/dancing-cat-dance.gif" alt="Happy Reaction" class="content-img">
+            <!-- Custom Pink Range Slider with Hearts -->
+            <div class="slider container"><input type="range" min="0" max="100" value="31" style="width: 100%;"></div>
+
+            <a href="seeyou.html" class="btn">Continue ⊂(・ヮ・⊂)</a>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 2 + "s"; /* Faster animation duration */
+            heart.style.width = heart.style.height = Math.random() * 10 + 15 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 2000); /* Remove heart after shorter time */
+        }
+
+        setInterval(createHeart, 20); /* Increase heart creation frequency */
+    </script>
+</body>
+</html>

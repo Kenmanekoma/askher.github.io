@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When Are You Free?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #FD1853;
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        button {
+            width: 70%;
+            max-width: 250px;
+            padding: 10px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-top: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-container input,
+        .form-container button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: 2px solid #FD1853;
+            border-radius: 5px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 300px;
+        }
+
+        .form-container button {
+            background-color: #FD1853;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #f5a9b8;
+        }
+
+        .form-container input {
+            text-align: center;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            transform: rotate(-45deg);
+            animation: floatUp 5s linear infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.7) rotate(-45deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            button {
+                width: 80%;
+            }
+
+            .heart {
+                width: 15px;
+                height: 15px;
+            }
+
+            .heart:before,
+            .heart:after {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .form-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            button {
+                width: 90%;
+            }
+
+            .heart {
+                width: 12px;
+                height: 12px;
+            }
+
+            .heart:before,
+            .heart:after {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>When Are You Free?</h1>
+    <div class="form-container">
+        <p>Please select date and time:</p>
+        <input type="date" id="date-picker" placeholder="Select date" required>
+        <input type="time" id="time-picker" placeholder="Select Time" required>
+        <br>
+        <button id="nextPageBtn">(づ￣ ³￣)づ CLICK ME</button>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+            heart.style.animationDuration = Math.random() * 3 + 3 + "s"; // Random float duration
+            heart.style.width = heart.style.height = Math.random() * 10 + 15 + "px"; // Smaller dynamic size range
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove(); // Remove heart after animation ends
+            }, 5000); // Match animation duration
+        }
+
+        setInterval(createHeart, 50); // Create a new heart every 50ms
+
+        // Button click event to capture date and time and redirect
+        document.getElementById("nextPageBtn").addEventListener("click", function() {
+            const date = document.getElementById("date-picker").value;
+            const time = document.getElementById("time-picker").value;
+
+            // Check if both date and time are selected
+            if (date && time) {
+                // Store the selected date and time in sessionStorage
+                sessionStorage.setItem("selectedDate", date);
+                sessionStorage.setItem("selectedTime", time);
+
+                // Redirect to "Where to Eat" page
+                window.location.href = "wheretoeat.html";
+            } else {
+                alert("Please select both date and time.");
+            }
+        });
+    </script>
+</body>
+</html>

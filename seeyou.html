@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>See ya</title>
+    <style>
+        html, body {
+            overflow: hidden; /* Disables scrolling */
+            height: 100%; /* Ensures it covers the full viewport */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #FD1853;
+            font-size: 6vw; /* Responsive font size */
+            margin: 20px 0;
+        }
+        h4 {
+            color: #FD1853;
+            font-size: 10vw; /* Responsive font size */
+            margin: 20px 0;
+        }
+        p {
+            font-size: 4vw; /* Responsive font size */
+            color: #333;
+            margin: 10px 0;
+        }
+        .content-img {
+            width: 80%; /* Relative size for responsiveness */
+            max-width: 200px; /* Limit the maximum size */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #FD1853;
+            color: white;
+            padding: 12px 40px; /* Adjust padding for smaller screens */
+            font-size: 4vw; /* Responsive font size */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: white;
+            color: #FD1853;
+            border: 2px solid #FD1853;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            transform: rotate(-45deg);
+            animation: floatUp 2s linear infinite; /* Faster animation */
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FD1853;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.7) rotate(-45deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+        /* Responsive Styles for Small Screens */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 8vw; /* Larger font size for smaller screens */
+            }
+            .btn {
+                font-size: 5vw; /* Adjust button size */
+                padding: 10px 30px; /* Smaller padding */
+            }
+        }
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .content-img {
+                width: 90%; /* Use more width for smaller screens */
+            }
+            .btn {
+                font-size: 5vw;
+                padding: 8px 25px;
+            }
+        }
+        form{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <img src="https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif" alt="Happy Reaction" class="content-img">
+    <h4>See ya</h4>
+    <h1>Don't Forget on </h1> <!-- This will be dynamically updated with the date and time -->
+   
+    <form action="https://formsubmit.co/42157c3c4358fe6b1db7bb33ceedb9d2" method="POST">
+        <input type="text" name="name" id="time">
+        <input type="text" name="email" id="food" required>
+        <button type="submit">Send</button>
+   </form>
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 2 + "s"; /* Faster animation duration */
+            heart.style.width = heart.style.height = Math.random() * 10 + 15 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 2000); /* Remove heart after shorter time */
+        }
+
+        setInterval(createHeart, 20); /* Increase heart creation frequency */
+
+        // Retrieve the selected date and time from sessionStorage
+        window.onload = function() {
+            const selectedDate = sessionStorage.getItem("selectedDate");
+            const selectedTime = sessionStorage.getItem("selectedTime");
+            const selectedFood = sessionStorage.getItem("selectedFood");
+            const selectedDo = sessionStorage.getItem("selectedDo");
+
+            // Check if both values exist
+            if (selectedDate && selectedTime) {
+                // Update the <h1> tag with the selected date and time
+                const h1 = document.querySelector("h1");
+                h1.textContent = `Don't Forget on ${selectedDate} at ${selectedTime}`;
+
+                const input1 = document.querySelector("#time");
+                input1.value = `${selectedDate} at ${selectedTime}`;
+
+                const input2 = document.querySelector("#food");
+                input2.value = `${selectedFood} at ${selectedDo}`;
+                
+                document.querySelector("#autoSubmitForm").submit();
+            } else {
+                // Optionally, handle the case where no date or time was selected
+                const h1 = document.querySelector("h1");
+                h1.textContent = "No date and time selected yet.";
+            }
+        };
+
+    </script>
+
+
+</body>
+</html>

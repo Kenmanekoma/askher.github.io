@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Out?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff3e6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent scrollbars due to floating hearts */
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            margin: 10% auto;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #FD9494;
+            font-size: 1.8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            background-color: #FD1853;
+            color: white;
+            padding: 20px 60px; /* Increased padding */
+            font-size: 20px; /* Increased font size */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: white;
+            color: #FD1853;
+            border: 2px solid #FD1853;
+        }
+
+        .btn-alt {
+            background-color: #FD1853;
+        }
+
+        .btn-alt:hover {
+            background-color: white;
+            color: #FD1853;
+            border: 2px solid #FD1853;
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            background-color: #FD1853;
+            transform: rotate(-45deg);
+            animation: floatUp 5s linear infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            background-color: #FD1853;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -0.5rem;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 0.5rem;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.7) rotate(-45deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden-content {
+            display: none;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 18px;
+            color: #FD1853;
+            z-index: 3; /* Ensure it appears above .container */
+        }
+        .hidden-content img {
+            width: 200px; /* Fixed width */
+            height: 200px; /* Fixed height */
+            object-fit: cover; /* Ensures the image covers the area without stretching */
+            border-radius: 10px;
+        }
+
+        .dialogue {
+            display: inline-block;
+            background-color: #FFDDC1;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 25px;
+            max-width: 300px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dialogue p {
+            margin: 0;
+            color: #FD9494;
+            font-weight: bold;
+        }
+
+        .dialogue::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 20px;
+            border-style: solid;
+            border-color: #FFDDC1 transparent transparent transparent;
+        }
+
+        .btn-big {
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+        }
+
+        .no-button-hidden {
+            display: none;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .btn {
+                padding: 2rem 2.5rem;
+                font-size: 1rem;
+            }
+            .btn-big {
+                padding: 2.2rem 3.5rem;
+                font-size: 2rem;
+            }
+            .dialogue {
+                font-size: 0.9rem;
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .btn-big {
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="hidden-content" class="hidden-content">
+        <img id="image" src="https://media1.tenor.com/m/t7_iTN0iYekAAAAC/sad-sad-cat.gif">
+        <br/>
+        <div class="dialogue">
+            <p id="dialogue-text">sakit mo na May! 😢</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Hi Gaebrielle, Would you like to go out on a date with me?</h1>
+        <a href="yesbtn.html" class="btn" id="yes-btn">Yes</a>
+        <a href="#" class="btn btn-alt" id="no-btn">No</a>
+    </div>
+
+    
+    <script>
+        let noClickCount = 0;
+        const yesButton = document.getElementById("yes-btn");
+        const noButton = document.getElementById("no-btn");
+        const hiddenContent = document.getElementById("hidden-content");
+        const image = document.getElementById("image");
+        const dialogueText = document.getElementById("dialogue-text");
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+            heart.style.width = heart.style.height = Math.random() * 10 + 15 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 50);
+
+        noButton.addEventListener("click", function() {
+            noClickCount++;
+            if (noClickCount === 1) {
+                yesButton.classList.add("btn-big");
+                image.src = "https://media1.tenor.com/m/t7_iTN0iYekAAAAC/sad-sad-cat.gif";
+                dialogueText.textContent = "sakit mo na, May! 😢";
+            } else if (noClickCount === 2) {
+                noButton.classList.add("no-button-hidden");
+                image.src = "https://media1.tenor.com/m/-jh6x7zxpHYAAAAd/cat-meow-meow-meow-meow-meow.gif";
+                dialogueText.textContent = "PLEASE! May 😭";
+            }
+            
+            hiddenContent.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
